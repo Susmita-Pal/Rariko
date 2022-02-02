@@ -2,14 +2,15 @@ const url="https://ethgasstation.info/api/ethgasAPI.json?";
 const lowGasId=document.getElementById("lowestGas");
 
 async function gas(){
-    setInterval(function () {
+    setInterval(await function () {
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 //console.log(data);
                 //console.log(data['safeLow']);
-                lowGasId.innerHTML=data['safeLow'];
-            }),1000});
+                lowGasId.innerHTML = data['safeLow'];
+            }), 1000
+    });
 }
 
 async function login(){
@@ -25,4 +26,4 @@ async function logout() {
 });
 }
 
-gas();
+ gas();
