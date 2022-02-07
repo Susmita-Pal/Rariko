@@ -17,7 +17,7 @@ async function gas(){
             .then(data => {
                 //console.log(data);
                 //console.log(data['safeLow']);
-                lowGasId.innerHTML ="Gas-Safe Low: "+ data['safeLow']+"Gas-Fast"+data['fast']+"Gas-Fastest: "+data['fastest'];
+                lowGasId.innerHTML ="Gas-Safe Low: "+ data['safeLow']+"<br>Gas-Fast"+data['fast']+"<br>Gas-Fastest: "+data['fastest'];
             }), 1000
     });
 }
