@@ -4,7 +4,7 @@ const NFTaddr="0x5vRGErJbhNEKbuiaZfiZg52t7wFjqpnZfpikpm7JScK8";
 const nftCollectionName="girlies-nft";
 const nftItemName="Prime Kong Planet #4105";
 const urlNFTDetails="https://api.opensea.io/api/v1/collection/"+nftCollectionName;
-
+const urlFetchAppNFTs="https://api.opensea.io/api/v1/collections?&limit=300";
 const serverUrl ="https://gwcryno2hsds.usemoralis.com:2053/server";
 const appId = "lmEdCuiTpOke6eeQHHB3VXlacngBDxcdaMQ3wVSH";
 
@@ -17,7 +17,7 @@ async function gas(){
             .then(data => {
                 //console.log(data);
                 //console.log(data['safeLow']);
-                lowGasId.innerHTML ="Gas-Safe Low: "+ data['safeLow'];
+                lowGasId.innerHTML ="Gas-Safe Low: "+ data['safeLow']+"Gas-Fast"+data['fast']+"Gas-Fastest: "+data['fastest'];
             }), 1000
     });
 }
@@ -33,6 +33,27 @@ async function logout() {
     window.solana.on('disconnect',()=>{
         console.log("Disconnected");
 });
+}
+async function nftMarketplace(){
+    fetch(urlFetchAppNFTs)
+        .then(response=>response.json())
+        .then(data=>{
+            let nftCollectionArr=data["collections"];
+            //console.log(nftCollectionArr.length);
+            nftCollectionArr.forEach(function (item,index) {
+
+                let slug=item["slug"];
+                let vol=item["stats"]["total_volume"];
+                console.log(vol+slug);
+                //displayNFTMarketplace(slug);
+                //item["featured_image_url"]
+                //document.getElementById("nft-marketplace").innerHTML+=slug+"<br>";
+                /* Display images on the screen
+                if(item["featured_image_url"]!=null)
+                    document.getElementById('nft-marketplace-img').src+=item["featured_image_url"];*/
+            });
+        })
+
 }
 
 async function getTokenMeta() {
@@ -87,6 +108,27 @@ async function getNFTCollectionDetails() {/*
             document.getElementById('collection-img-NFT').src=collection['image_url'];
             document.getElementById('NFT-name').innerHTML="Name: "+collection['name'];
             document.getElementById('NFT-desc').innerHTML="Description: "+collection['description'];
+        });
+}
+
+async function displayNFTMarketplace(slug){
+    let urlNFTMarketplace="https://api.opensea.io/api/v1/collection/"+slug;
+
+    fetch(urlNFTMarketplace)
+        .then(response => response.json())
+        .then(data => {
+            let collection=data["collection"];
+            let stats=collection["stats"];
+            let marketCap = stats["market_cap"];
+            let totalSupply = stats["total_supply"];
+            let floorPrice = stats["floor_price"];
+            let vol1d = stats["one_day_volume"];
+            let vol7d = stats["seven_day_volume"];
+            let bannerUrl=collection["banner_image_url"];
+            let imageUrl=collection['image_url'];
+            let name=collection["name"];
+            let desc=collection["description"];
+            console.log(name);
         });
 }
 /*    async function getFloorPrice(slug) {
