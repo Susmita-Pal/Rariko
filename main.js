@@ -7,6 +7,108 @@ const urlNFTDetails="https://api.opensea.io/api/v1/collection/"+nftCollectionNam
 const urlFetchAppNFTs="https://api.opensea.io/api/v1/collections?&limit=300";
 const serverUrl ="https://gwcryno2hsds.usemoralis.com:2053/server";
 const appId = "lmEdCuiTpOke6eeQHHB3VXlacngBDxcdaMQ3wVSH";
+const collectionArr=[
+    'cryptopunks',
+    'boredapeyachtclub',
+    'decentraland',
+    'mutant-ape-yacht-club',
+    'art-blocks',
+    'sandbox',
+    'clonex',
+    'rarible',
+    'azuki',
+    'decentraland-wearables',
+    'meebits',
+    'cool-cats-nft',
+    'doodles-official',
+    'lootproject',
+    'cryptokitties',
+    'superrare',
+    'bored-ape-kennel-club',
+    'parallelalpha',
+    'art-blocks-playground',
+    'cryptoadz-by-gremplin',
+    'punks-comic',
+    'world-of-women-nft',
+    'sorare',
+    'cyberkongz',
+    'art-blocks-factory',
+    'pudgypenguins',
+    'on1-force',
+    'mekaverse',
+    'zed-run-official',
+    'hapeprime',
+    'fidenza-by-tyler-hobbs',
+    'hashmasks',
+    'bored-ape-chemistry-club',
+    'veefriends',
+    'curiocardswrapper',
+    'creatureworld',
+    'phantabear',
+    'clonex-mintvial',
+    'town-star',
+    'emblem-vault',
+    'fluf-world',
+    'cyberkongz-vx',
+    'lostpoets',
+    'primeapeplanetpap',
+    'the-doge-pound',
+    'axie',
+    'somnium-space',
+    'mycryptoheroes',
+    'lazy-lions',
+    'ringers-by-dmitri-cherniak',
+    'collectvox',
+    'cryptovoxels',
+    'supernormalbyzipcy',
+    'supducks',
+    'deadfellaz',
+    'sneaky-vampire-syndicate',
+    'adidasoriginals',
+    'kaiju-kingz',
+    'genesis-creepz',
+    'capsulehouse',
+    'killergf',
+    'wolf-game-migrated',
+    'guttercatgang',
+    '888-inner-circle',
+    'cryptoskulls',
+    'livesofasuna',
+    'autoglyphs',
+    'jungle-freaks-by-trosley',
+    'adam-bomb-squad',
+    'galacticapes',
+    'alienfrensnft',
+    'treeverse',
+    'neotokyo-outer-identities',
+    'thecurrency',
+    'mirandus',
+    'acclimatedmooncats',
+    'collectionvoxmirandus',
+    'nft-worlds',
+    'meridian-by-matt-deslauriers',
+    'lil-heroes-by-edgar-plans',
+    'rumble-kong-league',
+    'makersplace',
+    'mutantcats',
+    'official-v1-punks',
+    'cryptobatz-by-ozzy-osbourne',
+    'bears-deluxe-old',
+    'galaxy-eggs',
+    'anonymice',
+    'robotos-official',
+    'neo-tokyo-identities',
+    'metroverse',
+    'wolf-game',
+    'coolmans-universe',
+    'c-01-official-collection',
+    'koala-intelligence-agency',
+    'worldwidewebbland',
+    'fragments-of-an-infinite-field-by-monica-rizzolli',
+    'treeverse-plots',
+    'metahero-generative',
+    'psychedelics-anonymous-genesis'
+]
 
 Moralis.start({ serverUrl, appId });
 
@@ -111,40 +213,29 @@ async function getNFTCollectionDetails() {/*
         });
 }
 
-async function displayNFTMarketplace(slug){
-    let urlNFTMarketplace="https://api.opensea.io/api/v1/collection/"+slug;
+async function displayNFTMarketplace(slugCollection){
+    slugCollection.forEach(function (item,index){
+        let urlNFTMarketplace="https://api.opensea.io/api/v1/collection/"+item;
 
-    fetch(urlNFTMarketplace)
-        .then(response => response.json())
-        .then(data => {
-            let collection=data["collection"];
-            let stats=collection["stats"];
-            let marketCap = stats["market_cap"];
-            let totalSupply = stats["total_supply"];
-            let floorPrice = stats["floor_price"];
-            let vol1d = stats["one_day_volume"];
-            let vol7d = stats["seven_day_volume"];
-            let bannerUrl=collection["banner_image_url"];
-            let imageUrl=collection['image_url'];
-            let name=collection["name"];
-            let desc=collection["description"];
-            console.log(name);
-        });
+        fetch(urlNFTMarketplace)
+            .then(response => response.json())
+            .then(data => {
+                let collection=data["collection"];
+                let stats=collection["stats"];
+                let marketCap = stats["market_cap"];
+                let totalSupply = stats["total_supply"];
+                let floorPrice = stats["floor_price"];
+                let vol1d = stats["one_day_volume"];
+                let vol7d = stats["seven_day_volume"];
+                let bannerUrl=collection["banner_image_url"];
+                let imageUrl=collection['image_url'];
+                let name=collection["name"];
+                let desc=collection["description"];
+                console.log(name,floorPrice);
+
+            });
+    })
 }
-/*    async function getFloorPrice(slug) {
-        try {
-            const url = `https://api.opensea.io/collection/${slug}/stats`;
-            const response = await axios.get(url);
-            console.log(response.data.stats.floor_price);
-        } catch (err) {
-            console.log(err);
-            return undefined;
-        }
-    }
-
-    getFloorPrice("lostpoets");
-     getFloorPrice("treeverse");
-     getFloorPrice("cool-cats-nft");*/
-
 
 gas();
+displayNFTMarketplace(collectionArr);
